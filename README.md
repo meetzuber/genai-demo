@@ -1,1 +1,1 @@
-# aiac-demo
+# GenAI Demo
