@@ -12,7 +12,7 @@ pipeline {
 
         stage('Scan Docker Image with Trivy') {
             steps {
-                sh  ‘trivy image --exit-code 0 --severity HIGH,CRITICAL --ignore-unfixed --format json jfrog-cr.10-35-151-40.nip.io/docker-local/helloworld:' + env.BUILD_NUMBER
+                sh  'trivy image --exit-code 0 --severity HIGH,CRITICAL --ignore-unfixed --format json jfrog-cr.10-35-151-40.nip.io/docker-local/helloworld:' + env.BUILD_NUMBER
              }
          }
 
