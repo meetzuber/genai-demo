@@ -31,7 +31,7 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'prdrke2-k8s', context: '', cluster: '', namespace: '']) {
                         // Replace 'deployment.yaml' with the path to your Kubernetes deployment configuration file
-                        sh 'sed -i "s/latest/${env.BUILD_NUMBER}/g" deployment.yaml'
+                        sh 'sed -i "s/latest/${BUILD_NUMBER}/g" deployment.yaml'
                         sh 'kubectl apply -f deployment.yaml'
                      }
                  }
