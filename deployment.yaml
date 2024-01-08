@@ -35,6 +35,7 @@ kind: Ingress
 metadata:
   name: helloworld
 spec:
+  ingressClassName: nginx1
   rules:
    - host: helloworld.10-35-151-199.nip.io
      http:
