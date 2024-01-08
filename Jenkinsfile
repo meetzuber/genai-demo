@@ -1,25 +1,41 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = 'myapp'
-        IMAGE_TAG = "${env.BUILD_NUMBER}"
-    }
-
     stages {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                }
-            }
-        }
-        stage('Scan Docker Image') {
+                    dockerImage = docker.build('jfrog-cr.10-35-151-40.nip.io/docker-local/helloworld:' + env.BUILD_NUMBER)
+                 }
+             }
+         }
+
+        stage('Scan Docker Image with Trivy') {
+            steps {
+                sh  ‘trivy image --exit-code 0 --severity HIGH,CRITICAL --ignore-unfixed --format json jfrog-cr.10-35-151-40.nip.io/docker-local/helloworld:' + env.BUILD_NUMBER
+             }
+         }
+
+        stage('Push Docker Image to Registry') {
             steps {
                 script {
-                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed ${IMAGE_NAME}:${IMAGE_TAG}"
-                }
-            }
-        }
-    }
+                    docker.withRegistry('https://jfrog-cr.10-35-151-40.nip.io', 'admin-jcr') {
+                        dockerImage.push()
+                     }
+                 }
+             }
+         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withKubeConfig([credentialsId: 'prdrke2-k8s', context: '', cluster: '', namespace: '']) {
+                        // Replace 'deployment.yaml' with the path to your Kubernetes deployment configuration file
+                        sh 'sed -i "s|latest|${env.BUILD_NUMBER}|g" deployment.yaml'
+                        sh 'kubectl apply -f deployment.yaml'
+                     }
+                 }
+             }
+         }
+     }
 }
