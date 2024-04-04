@@ -1,0 +1,5 @@
+{
+    "vscode-openai.conversation-configuration.number-of-attempts": 5,
+    "vscode-openai.conversation-configuration.summary-threshold": 3,
+    "vscode-openai.conversation-configuration.api-headers": []
+}
