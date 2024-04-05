@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                withDockerRegistry(credentialId: 'admin-jcr', url: https://jfrog-cr.10-35-151-40.nip.io/') {
+                withDockerRegistry(credentialId: 'admin-jcr', url: 'https://jfrog-cr.10-35-151-40.nip.io/') {
                     sh 'docker push ${REGISTRY_URL}demo:latest'
                 }
             }
