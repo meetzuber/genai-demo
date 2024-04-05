@@ -19,14 +19,14 @@ pipeline {
         }
         stage('Push') {
             steps {
-                withDockerRegistry(${REGISTRY_CREDENTIAL_ID}) {
+                withDockerRegistry(credentialId: 'admin-jcr', url: https://jfrog-cr.10-35-151-40.nip.io/') {
                     sh 'docker push ${REGISTRY_URL}demo:latest'
                 }
             }
         }
         stage('Deploy') {
             steps {
-                withKubeConfig(${KUBECONFIG_CREDENTIAL_ID}) {
+                withKubeConfig(credentialId: 'prdrke2-k8s') {
                     sh 'kubectl apply -f deployment.yaml'
                 }
             }
