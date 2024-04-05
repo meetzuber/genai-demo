@@ -36,7 +36,7 @@ kind: Ingress
 metadata:
   name: demo
 spec:
-  ingressClassname: nginx1
+  ingressClassName: nginx1
   rules:
   - host: demo.10-35-151-199.nip.io
     http:
