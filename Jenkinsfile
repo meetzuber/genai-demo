@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Scan') {
             steps {
-                sh 'trivy image --format plain ${REGISTRY_URL}demo:latest'
+                sh 'trivy image ${REGISTRY_URL}demo:latest'
             }
         }
         stage('Push') {
