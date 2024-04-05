@@ -38,7 +38,7 @@ metadata:
   #annotations:
   #  nginx.ingress.kubernetes.io/ingress-class: nginx1
 spec:
-  iingressClassName: nginx1
+  ingressClassName: nginx1
   rules:
   - host: demo.10-35-151-199.nip.io
     http:
